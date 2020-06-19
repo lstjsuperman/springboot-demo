@@ -23,6 +23,12 @@ import java.util.Date;
 public class WelcomeController {
     public static final String HOME_PATH = "//Users/momo/Desktop/file/";
 
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public String home() {
+        // 这里返回success，thymeleaf会通过这个字符串，去templates下取同名的文件，进行返回
+        return "success";
+    }
+
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String welcome(@RequestParam("name") String userName) {
         System.out.println("UserName:" + userName);
@@ -46,7 +52,7 @@ public class WelcomeController {
 
     @RequestMapping(value = "/upload-file", method = RequestMethod.POST)
     public @ResponseBody
-    String uploadFile(@RequestParam(value = "fileName") String fileName, MultipartFile file) {
+    String uploadFile(@RequestParam(value = "fileName") String fileName, @RequestParam(value = "file") MultipartFile file) {
         if (StringUtils.isEmpty(fileName) || file == null) {
             return "failed";
         }
